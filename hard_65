@@ -1,0 +1,62 @@
+class Solution {
+    public boolean isNumber(String s) {
+        int i = 0;
+        int n = s.length();
+
+        // Check sign
+        if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+            i++;
+        }
+
+        // Digits before decimal
+        boolean digitBefore = false;
+
+        while (i < n && Character.isDigit(s.charAt(i))) {
+            digitBefore = true;
+            i++;
+        }
+
+        // Check decimal point
+        boolean digitAfter = false;
+
+        if (i < n && s.charAt(i) == '.') {
+            i++;
+
+            // Digits after decimal
+            while (i < n && Character.isDigit(s.charAt(i))) {
+                digitAfter = true;
+                i++;
+            }
+        }
+
+        // There must be at least one digit
+        if (!digitBefore && !digitAfter) {
+            return false;
+        }
+
+        // Check exponent
+        if (i < n && (s.charAt(i) == 'e' || s.charAt(i) == 'E')) {
+            i++;
+
+            // Exponent can have + or -
+            if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+                i++;
+            }
+
+            // Exponent must contain digits
+            boolean exponentDigit = false;
+
+            while (i < n && Character.isDigit(s.charAt(i))) {
+                exponentDigit = true;
+                i++;
+            }
+
+            if (!exponentDigit) {
+                return false;
+            }
+        }
+
+        // If we reached the end, it is valid
+        return i == n;
+    }
+}
