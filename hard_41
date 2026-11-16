@@ -1,0 +1,25 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+
+        // Place each value v (1 <= v <= n) at index v - 1
+        for (int i = 0; i < n; i++) {
+            while (nums[i] >= 1 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                int target = nums[i] - 1;
+                int temp = nums[target];
+                nums[target] = nums[i];
+                nums[i] = temp;
+            }
+        }
+
+        // The first index where nums[i] != i + 1 reveals the missing number
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+
+        // All of 1..n are present
+        return n + 1;
+    }
+}
