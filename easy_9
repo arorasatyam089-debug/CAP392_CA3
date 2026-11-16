@@ -1,0 +1,17 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        // Negatives aren't palindromes; a number ending in 0 can only be one if it is 0
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int rev = 0;
+        while (x > rev) {
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
+
+        // Even digit count: x == rev. Odd digit count: the middle digit sits in rev, so drop it.
+        return x == rev || x == rev / 10;
+    }
+}
